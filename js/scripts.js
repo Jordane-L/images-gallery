@@ -356,10 +356,7 @@
   // Listen to resize event
   window.addEventListener('resize', onResize)
 
-  // Load resources, then init the app
-  PIXI.Loader.shared.add([
-    'shaders/stageFragment.glsl',
-    'shaders/backgroundFragment.glsl'
-  ]).load(init)
+ // Init the app
+  init()
 
 })()
