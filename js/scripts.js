@@ -62,19 +62,15 @@
   // Useful variables to keep track of the pointer
   let pointerStart = new PIXI.Point()
   let pointerDiffStart = new PIXI.Point()
-  let width, height
-  let container, background
-  let uniforms
-  let app
-  let diffX, diffY
+  let width, height, app, background, uniforms, diffX, diffY
 
   // Variables and settings for grid
   const gridSize = 50
   const gridMin = 3
   const imagePadding = 20
   let gridColumnsCount, gridRowsCount, gridColumns, gridRows, grid
-  let widthRest, heightRest, centerX, centerY
-  let rects, images, imagesUrls
+  let widthRest, heightRest, centerX, centerY, container, rects
+  let images, imagesUrls
 
   // Set dimensions
   function initDimensions () {
@@ -123,11 +119,11 @@
     app = new PIXI.Application({ view })
     // Resizes renderer view in CSS pixels to allow for resolutions other than 1
     app.renderer.autoDensity = true
-    // Resize the view to match viewport size
+    // Resize the view to match viewport dimensions
     app.renderer.resize(width, height)
 
     // Set the distortion filter for the entire stage
-    const stageFragmentShader = resources['shaders/stageFragment.glsl'].data
+    const stageFragmentShader = document.getElementById('stageFragment').textContent
     const stageFilter = new PIXI.Filter(undefined, stageFragmentShader, uniforms)
     app.stage.filters = [stageFilter]
   }
@@ -139,8 +135,8 @@
     background.width = width
     background.height = height
     // Get the code for the fragment shader from the loaded resources
-    const backgroundFragmentShader = resources['shaders/backgroundFragment.glsl'].data
-    // Create a new Filter using the fragment shader and the uniforms
+    const backgroundFragmentShader = document.getElementById('backgroundFragment').textContent
+    // Create a new Filter using the fragment shader
     // We don't need a custom vertex shader, so we set it as `undefined`
     const backgroundFilter = new PIXI.Filter(undefined, backgroundFragmentShader, uniforms)
     // Assign the filter to the background Sprite
@@ -356,7 +352,7 @@
   // Listen to resize event
   window.addEventListener('resize', onResize)
 
- // Init the app
+  // Init the app
   init()
 
 })()
